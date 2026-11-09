@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>香水卡</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;900&family=Noto+Sans+TC:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/cards.css">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<div class="page">
+  <header class="topbar"><a class="brand" href="index.html">香水卡</a><nav><a href="index.html">所有組合</a><a href="mix.html">自己疊疊看</a><a href="editor.html">新增香水</a></nav></header>
+  <header class="intro"><h1 id="title">載入中…</h1><p id="desc"></p><div class="mine-actions"><button type="button" class="btn solid" id="save-all">整組存到手機</button><a class="btn" href="mix.html">自己疊疊看</a></div></header>
+
+  <section class="mine" aria-labelledby="mine-h">
+    <div class="mine-top">
+      <div><h2 id="mine-h">我的排行</h2><p class="mine-sub">依你在香水卡上打的總分排序。分數存在這台裝置的瀏覽器裡，換裝置前先匯出備份。</p></div>
+      <div class="mine-actions"><button type="button" class="btn" data-act="export">匯出備份</button><button type="button" class="btn" data-act="import">匯入備份</button><input type="file" id="import-file" accept="application/json,.json" hidden></div>
+    </div>
+    <ol class="rank-list" id="rank-list"></ol>
+    <p class="mine-empty" id="rank-empty">還沒有任何評分。試香後在任一款香水卡下方打分數，會出現在這裡。</p>
+  </section>
+
+  <main class="deck" id="deck" aria-live="polite"><p class="status">載入香水資料中…</p></main>
+
+  <section class="mine" aria-labelledby="log-h">
+    <div class="mine-top"><div><h2 id="log-h">我的試香紀錄</h2><p class="mine-sub">在「試香紀錄」卡填好後按「儲存這筆紀錄」。</p></div></div>
+    <ul class="log-list" id="log-list"></ul>
+    <p class="mine-empty" id="log-empty">還沒有儲存的紀錄。</p>
+  </section>
+</div>
+<div class="toast" id="toast" role="status"></div>
+<script src="assets/vendor/html-to-image.js"></script>
+<script src="assets/cards.js"></script>
+<script src="assets/export.js"></script>
+<script src="assets/deck.js"></script>
+</body>
+</html>

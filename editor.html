@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>新增香水</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;900&family=Noto+Sans+TC:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/cards.css">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<div class="page">
+  <header class="topbar"><a class="brand" href="index.html">香水卡</a><nav><a href="index.html">所有組合</a></nav></header>
+  <header class="intro">
+    <h1>新增香水與組合</h1>
+    <p>填好表單會產生資料檔。按「在 GitHub 建立這個檔案」會開啟 GitHub 的新增檔案頁，內容已經填好，按 Commit 就完成。</p>
+  </header>
+
+  <details class="note-box" id="repo-box">
+    <summary><b>GitHub 儲存庫設定</b>　<span id="repo-label"></span></summary>
+    <div class="f2" style="margin-top:10px">
+      <div class="fld"><label for="r-owner">帳號</label><input id="r-owner" autocomplete="off"></div>
+      <div class="fld"><label for="r-repo">儲存庫</label><input id="r-repo" autocomplete="off"></div>
+      <div class="fld"><label for="r-branch">分支</label><input id="r-branch" value="main" autocomplete="off"></div>
+    </div>
+  </details>
+
+  <div class="tabs" role="tablist">
+    <button type="button" role="tab" id="t-perfume" aria-selected="true" aria-controls="p-perfume">新增香水</button>
+    <button type="button" role="tab" id="t-col" aria-selected="false" aria-controls="p-col">新增組合</button>
+  </div>
+
+  <!-- perfume -->
+  <section id="p-perfume" role="tabpanel" aria-labelledby="t-perfume" class="ed">
+    <form class="fm" id="f-perfume" autocomplete="off">
+      <fieldset><legend>品牌</legend>
+        <div class="f2">
+          <div class="fld"><label for="brand">品牌（英文）</label><input id="brand" name="brand" placeholder="NOSEWAY" required></div>
+          <div class="fld"><label for="brandZh">品牌中文名</label><input id="brandZh" name="brandZh" placeholder="迷香人"></div>
+        </div>
+        <div class="fld"><label for="brandSlug">品牌資料夾</label><input id="brandSlug" name="brandSlug" placeholder="noseway" pattern="[a-z0-9-]+"><small>只用小寫英文、數字和 -，同品牌的香水都放這個資料夾。</small></div>
+      </fieldset>
+      <fieldset><legend>香水</legend>
+        <div class="f2">
+          <div class="fld"><label for="name">中文名</label><input id="name" name="name" placeholder="樹下無事" required></div>
+          <div class="fld"><label for="en">英文名</label><input id="en" name="en" placeholder="In Green Silence"></div>
+        </div>
+        <div class="f2">
+          <div class="fld"><label for="slug">檔名</label><input id="slug" name="slug" placeholder="in-green-silence" pattern="[a-z0-9-]+"><small>預設用英文名產生。</small></div>
+          <div class="fld"><label for="series">系列</label><input id="series" name="series" placeholder="木質系列"></div>
+        </div>
+        <div class="fld"><label for="materials">香材</label><textarea id="materials" name="materials" rows="2" placeholder="苦橙葉、橄欖葉、百里香、冷杉"></textarea><small>用頓號或逗號分隔。不知道的話留空。</small></div>
+        <details><summary style="font-size:13px;font-weight:700;color:var(--tea);cursor:pointer">有前中後調的話（基底香水卡會用到）</summary>
+          <div class="fld" style="margin-top:8px"><label for="top">前調</label><input id="top" name="top"></div>
+          <div class="fld"><label for="heart">中調</label><input id="heart" name="heart"></div>
+          <div class="fld"><label for="baseNotes">後調</label><input id="baseNotes" name="baseNotes"></div>
+        </details>
+        <div class="f2">
+          <div class="fld"><label for="source">「單獨聞起來」的來源</label><select id="source" name="source"><option>推論</option><option>官方</option><option>試香心得</option><option>實際試香</option></select></div>
+          <div class="fld"><label for="materialsNote">沒有香材時的說明</label><input id="materialsNote" name="materialsNote" placeholder="完整香調尚未核實"></div>
+        </div>
+        <div class="fld"><label for="smell">單獨聞起來</label><textarea id="smell" name="smell" rows="2" placeholder="青綠草本、尤加利的清涼感，加上泥土和森林木質。"></textarea></div>
+      </fieldset>
+      <fieldset><legend>外觀</legend>
+        <div class="f2">
+          <div class="fld"><label for="color">主色</label><input type="color" id="color" name="color" value="#2C6145"><small>從瓶身標籤挑一個顏色，底色會自動調淡。</small></div>
+          <div class="fld"><label for="theme">卡片底色</label><select id="theme" name="theme"><option value="light">淺色</option><option value="dark">深色</option></select></div>
+        </div>
+        <div class="fld"><label for="photoFile">瓶身照（只用來預覽）</label><input type="file" id="photoFile" accept="image/*"><small>正式照片要上傳到 GitHub，檔名用下面顯示的路徑。直式、去背或白底效果最好。</small></div>
+      </fieldset>
+    </form>
+    <div class="out">
+      <div class="preview" id="pv"></div>
+      <div class="note-box">檔案路徑：<code id="o-path"></code><br>照片路徑：<code id="o-photo"></code></div>
+      <div class="mine-actions">
+        <a class="btn solid" id="gh-new" target="_blank" rel="noopener">在 GitHub 建立這個檔案</a>
+        <a class="btn" id="gh-upload" target="_blank" rel="noopener">上傳照片</a>
+        <button type="button" class="btn" id="copy-p">複製 JSON</button>
+      </div>
+      <pre id="o-json" aria-label="產生的 JSON"></pre>
+    </div>
+  </section>
+
+  <!-- collection -->
+  <section id="p-col" role="tabpanel" aria-labelledby="t-col" class="ed" hidden>
+    <form class="fm" id="f-col" autocomplete="off">
+      <fieldset><legend>組合</legend>
+        <div class="f2">
+          <div class="fld"><label for="c-title">組合名稱</label><input id="c-title" placeholder="綠茶 × 黑杜松疊香卡" required></div>
+          <div class="fld"><label for="c-id">檔名</label><input id="c-id" placeholder="tea-juniper" pattern="[a-z0-9-]+"></div>
+        </div>
+        <div class="fld"><label for="c-desc">簡介</label><textarea id="c-desc" rows="2"></textarea></div>
+      </fieldset>
+      <fieldset><legend>香水</legend>
+        <div class="mine-actions"><button type="button" class="btn" id="load-list">從 GitHub 讀取已有的香水</button></div>
+        <div class="fld"><label for="c-base">基底香水（每行一支：品牌資料夾/檔名 簡稱）</label><textarea id="c-base" rows="3" placeholder="biochem/green-tea-13 綠茶&#10;lerbolario/ginepro-nero 黑杜松"></textarea><small>你已經有、固定會疊的香水。沒有基底就留空，卡片會變成單純的香水比較。</small></div>
+        <div class="fld"><label for="c-cands">候選香水（每行一支：品牌資料夾/檔名）</label><textarea id="c-cands" rows="6" placeholder="noseway/in-green-silence&#10;noseway/jade-breeze"></textarea></div>
+        <div id="perfume-picks" class="note-box" hidden></div>
+      </fieldset>
+      <fieldset><legend>評分項目</legend>
+        <div class="fld"><label for="c-metrics">每行一項：名稱｜說明</label><textarea id="c-metrics" rows="5">單獨｜只噴這支
+疊香後｜加上基底一起聞
+木質｜木頭感多明顯
+清爽｜乾淨通透程度
+持香｜留香時間</textarea></div>
+      </fieldset>
+    </form>
+    <div class="out">
+      <div class="note-box">
+        組合檔建立後，每支候選香水的「疊起來的結果、原因、可能衝突、相容性分數」都是空白，可以在 GitHub 上直接編輯補上，或請 Claude 幫你寫。<br>
+        最後到 <a id="gh-index" target="_blank" rel="noopener">data/index.json</a> 加一行，首頁才會出現這個組合：<pre id="o-index" style="margin-top:6px"></pre>
+      </div>
+      <div class="note-box">檔案路徑：<code id="o-cpath"></code></div>
+      <div class="mine-actions">
+        <a class="btn solid" id="gh-cnew" target="_blank" rel="noopener">在 GitHub 建立這個檔案</a>
+        <button type="button" class="btn" id="copy-c">複製 JSON</button>
+      </div>
+      <pre id="o-cjson" aria-label="產生的組合 JSON"></pre>
+    </div>
+  </section>
+</div>
+<div class="toast" id="toast" role="status"></div>
+<script src="assets/cards.js"></script>
+<script src="assets/editor.js"></script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>自己疊疊看</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;900&family=Noto+Sans+TC:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="assets/cards.css">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<div class="page">
+  <header class="topbar"><a class="brand" href="index.html">香水卡</a><nav><a href="index.html">所有組合</a><a href="editor.html">新增香水</a></nav></header>
+  <header class="intro">
+    <h1>自己疊疊看</h1>
+    <p>挑 2 到 3 支香水，依照噴的順序點選。網頁會依香材分析這組可能的香氣方向，試香後寫下感受，就能存成一張 1080×1350 的圖片到手機。</p>
+  </header>
+
+  <section class="picker" aria-labelledby="pick-h">
+    <h2 id="pick-h" style="margin:0;font-family:var(--serif);font-size:22px">1. 挑香水</h2>
+    <div class="picker-bar">
+      <div class="fld"><label for="q">搜尋</label><input id="q" type="search" placeholder="名稱、品牌或香材，例如 檜木" autocomplete="off"></div>
+      <div class="fld"><label for="brandSel">品牌</label><select id="brandSel"><option value="">全部品牌</option></select></div>
+      <button type="button" class="btn" id="clear">清除選擇</button>
+    </div>
+    <div class="tiles" id="tiles" aria-live="polite"><p class="status">載入香水中…</p></div>
+  </section>
+
+  <section aria-labelledby="res-h" style="display:flex;flex-direction:column;gap:12px">
+    <h2 id="res-h" style="margin:0;font-family:var(--serif);font-size:22px">2. 我的疊香卡</h2>
+    <div class="mixwrap">
+      <div id="mixcard-box"></div>
+      <div class="mixctl">
+        <div class="fld"><span style="font-size:13px;font-weight:700;color:var(--tea)">已選</span><div class="sel-list" id="sel-list"></div></div>
+        <div class="fld"><span id="like-l" style="font-size:13px;font-weight:700;color:var(--tea)">喜歡程度</span><div class="rate5" id="like" role="group" aria-labelledby="like-l"></div></div>
+        <div class="fld"><span id="harm-l" style="font-size:13px;font-weight:700;color:var(--tea)">融合度（疊起來順不順）</span><div class="rate5" id="harm" role="group" aria-labelledby="harm-l"></div></div>
+        <div class="fld"><label for="feel">我的感受</label><textarea id="feel" rows="3" placeholder="例如：前 10 分鐘柑橘很亮，半小時後變成乾淨的木頭味"></textarea></div>
+        <div class="fld"><label for="who">署名（會印在圖片上，可留空）</label><input id="who" maxlength="20" autocomplete="nickname"></div>
+        <div class="mine-actions">
+          <button type="button" class="btn solid" id="save-img">存到手機</button>
+          <button type="button" class="btn" id="keep">存進我的紀錄</button>
+          <button type="button" class="btn" id="share-link">複製這組的連結</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mine" aria-labelledby="hist-h">
+    <div class="mine-top"><div><h2 id="hist-h">我疊過的組合</h2><p class="mine-sub">存在這台裝置的瀏覽器裡。點一組可以重新打開。</p></div></div>
+    <ul class="log-list" id="hist"></ul>
+    <p class="mine-empty" id="hist-empty">還沒有存過組合。</p>
+  </section>
+</div>
+<div class="toast" id="toast" role="status"></div>
+<script src="assets/vendor/html-to-image.js"></script>
+<script src="assets/cards.js"></script>
+<script src="assets/export.js"></script>
+<script src="assets/mix.js"></script>
+</body>
+</html>

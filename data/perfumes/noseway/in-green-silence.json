@@ -1,0 +1,27 @@
+{
+  "brand": "NOSEWAY",
+  "brandZh": "迷香人",
+  "name": "樹下無事",
+  "en": "In Green Silence",
+  "series": "木質系列",
+  "photo": "https://img.shoplineapp.com/media/image_clips/69bd021cc50e34ad7479eb56/original.png?1773994522=&owner_id=5cc80df915c071000101084d",
+  "color": "#2C6145",
+  "bg": "#E1ECE3",
+  "soft": "#C6DCCB",
+  "materials": [
+    "苦橙葉",
+    "橄欖葉",
+    "百里香",
+    "泥土",
+    "尤加利",
+    "天竺葵",
+    "冷杉",
+    "樺木",
+    "岩蘭草"
+  ],
+  "source": "推論",
+  "smell": "青綠草本、尤加利的清涼感，加上泥土和森林木質。",
+  "photoFit": "contain",
+  "photoBg": "#ffffff",
+  "photoCredit": "NOSEWAY 官網"
+}

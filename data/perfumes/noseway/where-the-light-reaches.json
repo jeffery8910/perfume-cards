@@ -1,0 +1,24 @@
+{
+  "brand": "NOSEWAY",
+  "brandZh": "迷香人",
+  "name": "半夕之間",
+  "en": "Where the Light Reaches",
+  "series": "木質系列",
+  "photo": "https://img.shoplineapp.com/media/image_clips/67ecf5ac02ab3c000f9f1ef9/original.jpg?1743582635",
+  "color": "#8A5A2B",
+  "bg": "#F0E8DE",
+  "soft": "#E3D2BD",
+  "materials": [
+    "焚香",
+    "花梨木",
+    "岩蘭草",
+    "癒創木",
+    "綠檀",
+    "安息香"
+  ],
+  "source": "推論",
+  "smell": "乾燥的木頭、淡淡的煙燻焚香，和一些樹脂的暖意。",
+  "photoFit": "contain",
+  "photoBg": "#ffffff",
+  "photoCredit": "NOSEWAY 官網"
+}

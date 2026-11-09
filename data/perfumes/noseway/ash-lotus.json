@@ -1,0 +1,27 @@
+{
+  "brand": "NOSEWAY",
+  "brandZh": "迷香人",
+  "name": "紙紅蓮",
+  "en": "Ash Lotus",
+  "series": "臺讀 Dear Taiwan",
+  "photo": "https://img.shoplineapp.com/media/image_clips/6abc7a4beef24e000dc7ad6d/original.png?1790736969=&owner_id=5cc80df915c071000101084d",
+  "color": "#8A3B2E",
+  "bg": "#F0E7E4",
+  "soft": "#E6D0C9",
+  "materials": [
+    "灰燼",
+    "燃燒紙張",
+    "柚葉",
+    "黃玉蘭",
+    "龍眼",
+    "米酒",
+    "安息香",
+    "乳香",
+    "橡木"
+  ],
+  "source": "推論",
+  "smell": "燃燒紙張的煙燻氣息、樹脂焚香，帶少量果香和花香。",
+  "photoFit": "contain",
+  "photoBg": "#ffffff",
+  "photoCredit": "NOSEWAY 官網"
+}

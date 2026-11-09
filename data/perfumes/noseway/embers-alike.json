@@ -1,0 +1,26 @@
+{
+  "brand": "NOSEWAY",
+  "brandZh": "迷香人",
+  "name": "寂燼同焚",
+  "en": "Embers Alike",
+  "series": "木質系列",
+  "photo": "https://img.shoplineapp.com/media/image_clips/69a01c995530d152e35b9fa3/original.png?1772100759=&owner_id=5cc80df915c071000101084d",
+  "color": "#E2B07A",
+  "bg": "#29211D",
+  "soft": "#4A3B31",
+  "theme": "dark",
+  "materials": [
+    "檀香",
+    "焚香",
+    "琥珀",
+    "樹脂",
+    "松木",
+    "冷杉",
+    "沉香木"
+  ],
+  "source": "推論",
+  "smell": "濃郁的木質樹脂，有檀香、松木和溫暖的焚香。",
+  "photoFit": "contain",
+  "photoBg": "#ffffff",
+  "photoCredit": "NOSEWAY 官網"
+}

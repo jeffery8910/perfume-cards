@@ -1,0 +1,25 @@
+{
+  "brand": "NOSEWAY",
+  "brandZh": "迷香人",
+  "name": "東岸不再漂流",
+  "en": "Tideworn",
+  "series": "臺讀 Dear Taiwan",
+  "photo": "https://img.shoplineapp.com/media/image_clips/6abc7bbc3ee69c0ef352f832/original.png?1790737338=&owner_id=5cc80df915c071000101084d",
+  "color": "#1F5C78",
+  "bg": "#E3EDF1",
+  "soft": "#C9DEE8",
+  "materials": [
+    "海鹽",
+    "柚子皮",
+    "陳年木",
+    "漂流木",
+    "檜木",
+    "岩蘭草",
+    "龍涎香調"
+  ],
+  "source": "推論",
+  "smell": "帶微鹹海風的柚子木質香，偏乾燥清爽，有老木頭與檜木感。",
+  "photoFit": "contain",
+  "photoBg": "#ffffff",
+  "photoCredit": "NOSEWAY 官網"
+}

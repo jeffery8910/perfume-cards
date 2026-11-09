@@ -1,0 +1,26 @@
+{
+  "brand": "L'ERBOLARIO",
+  "brandZh": "蕾莉歐",
+  "name": "黑杜松活力體香露",
+  "en": "Ginepro Nero",
+  "sub": "L'ERBOLARIO · GINEPRO NERO",
+  "photo": "img/lerbolario/ginepro-nero.jpg",
+  "theme": "dark",
+  "color": "#B9BFDD",
+  "bg": "#1B2140",
+  "soft": "#3A4373",
+  "classification": "柑橘木質調",
+  "classificationLabel": "官方香氣分類",
+  "materials": [
+    "杜松莓",
+    "苦橙",
+    "欖香脂",
+    "雪松",
+    "安息香"
+  ],
+  "materialsLabel": "同系列香水的代表香材",
+  "source": "推論",
+  "smell": "像男性古龍水的清新柑橘，加上杜松的芳香草本感，尾韻是乾爽木頭和微暖的樹脂。",
+  "warning": "這支是體香露，不是同系列香水。官方沒有公布體香露完整的前中後調，兩者氣味不一定相同。",
+  "photoCredit": "自己拍的"
+}
