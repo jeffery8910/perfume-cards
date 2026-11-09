@@ -68,7 +68,23 @@
           <div class="fld"><label for="color">主色</label><input type="color" id="color" name="color" value="#2C6145"><small>從瓶身標籤挑一個顏色，底色會自動調淡。</small></div>
           <div class="fld"><label for="theme">卡片底色</label><select id="theme" name="theme"><option value="light">淺色</option><option value="dark">深色</option></select></div>
         </div>
-        <div class="fld"><label for="photoFile">瓶身照（只用來預覽）</label><input type="file" id="photoFile" accept="image/*"><small>正式照片要上傳到 GitHub，檔名用下面顯示的路徑。直式、去背或白底效果最好。</small></div>
+      </fieldset>
+      <fieldset><legend>照片</legend>
+        <div class="fld"><label for="photoMode">照片從哪裡來</label><select id="photoMode">
+          <option value="url">香水網站的圖片（連過去，並註明來源）</option>
+          <option value="fragrantica">Fragrantica 的商品圖</option>
+          <option value="own">我自己拍的（上傳到這個儲存庫）</option>
+          <option value="none">先不放，畫一個瓶子</option>
+        </select></div>
+        <div class="fld" data-mode="url"><label for="photoUrl">圖片網址</label><input id="photoUrl" type="url" placeholder="https://…/original.png"><small>在品牌官網的商品圖上按右鍵（手機長按）選「複製圖片位址」。圖片不會複製進儲存庫，卡片上會註明來源並連到商品頁。</small></div>
+        <div class="fld" data-mode="fragrantica"><label for="fragUrl">Fragrantica 商品頁網址</label><input id="fragUrl" type="url" placeholder="https://www.fragrantica.com/perfume/品牌/名稱-12345.html"><small>網址最後的數字就是圖片編號，會自動換成 Fragrantica 的商品圖並註明來源。</small></div>
+        <div class="f2" data-mode="url">
+          <div class="fld"><label for="photoCredit">來源名稱</label><input id="photoCredit" placeholder="NOSEWAY 官網"></div>
+          <div class="fld"><label for="link">商品頁網址</label><input id="link" type="url" placeholder="https://www.noseway.com.tw/products/…"></div>
+        </div>
+        <div class="fld" data-mode="own"><label for="photoFile">選一張照片</label><input type="file" id="photoFile" accept="image/*"><small>直式、白底或乾淨背景最好。按下面的「下載整理好的照片」會縮成適合網頁的大小並用正確檔名存下，再按「上傳照片」傳到 GitHub。</small>
+          <div class="mine-actions" style="margin-top:6px"><button type="button" class="btn" id="dl-photo">下載整理好的照片</button></div></div>
+        <div class="fld"><label for="photoFit">照片顯示方式</label><select id="photoFit"><option value="contain">完整顯示整支瓶子（白底商品圖適合）</option><option value="cover">填滿方框（自己拍的生活照適合）</option></select></div>
       </fieldset>
     </form>
     <div class="out">

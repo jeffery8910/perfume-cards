@@ -200,3 +200,13 @@ html.shot .web-only{display:none!important}
 .mix-empty{margin:auto 0;text-align:center;color:var(--muted);font-size:3cqw;line-height:1.7}
 .bottle{position:absolute;inset:8% 10%;width:80%;height:84%}
 .img-miss{position:absolute;inset:0;display:grid;place-items:center;font-size:2cqw;color:var(--muted)}
+
+/* photo slot: credit line + "use my photo" buttons */
+.img-slot{position:absolute;inset:0;display:block}
+.pc-img{background:var(--p-bg,#fff)}
+.credit{position:absolute;right:1.2cqw;bottom:1.2cqw;max-width:calc(100% - 2.4cqw);font-size:max(9px,1.45cqw);line-height:1.3;padding:.3cqw 1cqw;border-radius:99cqw;background:rgba(255,255,255,.88);color:#3A4A40;text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;z-index:1}
+a.credit:hover{text-decoration:underline}
+.ph .credit{top:1.6cqw;bottom:auto}
+.photo-btns{position:absolute;left:1.2cqw;top:1.2cqw;display:flex;flex-wrap:wrap;gap:.8cqw;z-index:2}
+.photo-btns button{font:inherit;font-size:max(11px,1.7cqw);font-weight:700;padding:.5cqw 1.2cqw;min-height:26px;border-radius:99cqw;border:0;background:rgba(22,40,29,.78);color:#fff;cursor:pointer}
+.photo-btns button:focus-visible{outline:3px solid var(--citrus);outline-offset:1px}

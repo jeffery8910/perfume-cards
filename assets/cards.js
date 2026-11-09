@@ -75,10 +75,85 @@
       '<rect x="36" y="70" width="48" height="36" rx="4" fill="' + (d.dark ? d.bg : "#fff") + '" stroke="' + ink + '" stroke-width="1.5"/>' +
       '<text x="60" y="93" text-anchor="middle" font-size="11" font-weight="700" fill="' + ink + '" font-family="sans-serif">' + esc((p.en || p.name || "").slice(0, 10)) + "</text></svg>";
   }
-  function img(p, alt) {
-    if (!p.photo) return bottle(p, alt);
-    return '<img src="' + url(p.photo) + '" alt="' + esc(alt) + '" referrerpolicy="no-referrer" onerror="this.replaceWith(Object.assign(document.createElement(\'span\'),{className:\'img-miss\',textContent:\'圖片載入失敗\'}))">';
+  // ---- photos --------------------------------------------------------
+  // A viewer can swap in their own bottle photo; it stays in their browser only.
+  var MYKEY = "perfume-cards:my-photos", REG = {}, mine = null;
+  function myPhotos() {
+    if (mine) return mine;
+    try { mine = JSON.parse(localStorage.getItem(MYKEY)) || {}; } catch (e) { mine = {}; }
+    return mine;
   }
+  function setMyPhoto(ref, dataURL) {
+    var m = myPhotos();
+    if (dataURL) m[ref] = dataURL; else delete m[ref];
+    try { localStorage.setItem(MYKEY, JSON.stringify(m)); return true; }
+    catch (e) { if (dataURL) delete m[ref]; return false; }
+  }
+  function img(p, alt, opts) {
+    opts = opts || {};
+    if (p.ref) REG[p.ref] = p;
+    var own = p.ref && myPhotos()[p.ref];
+    var src = own || p.photo, html;
+    if (!src) html = bottle(p, alt);
+    else html = '<img src="' + (own ? own : url(src)) + '" alt="' + esc(alt) + '" referrerpolicy="no-referrer"' + (own ? ' style="object-fit:cover"' : "") +
+      ' onerror="this.replaceWith(Object.assign(document.createElement(\'span\'),{className:\'img-miss\',textContent:\'圖片載入失敗\'}))">';
+    var credit = own ? "我拍的" : (src ? p.photoCredit : "");
+    if (credit) {
+      var link = !own && (p.photoSource || p.link);
+      html += link ? '<a class="credit" href="' + esc(link) + '" target="_blank" rel="noopener">圖：' + esc(credit) + "</a>"
+                   : '<span class="credit">圖：' + esc(credit) + "</span>";
+    }
+    if (opts.changeable && p.ref) {
+      html += '<span class="photo-btns web-only"><button type="button" data-photo="' + esc(p.ref) + '">' + (own ? "換照片" : "用我的照片") + "</button>" +
+        (own ? '<button type="button" data-photo-reset="' + esc(p.ref) + '">還原</button>' : "") + "</span>";
+    }
+    return html;
+  }
+  function wrapImg(p, alt, opts) {
+    return '<span class="img-slot" data-img="' + esc(p.ref || "") + '" data-alt="' + esc(alt) + '" data-ch="' + (opts && opts.changeable ? 1 : 0) + '">' + img(p, alt, opts) + "</span>";
+  }
+  function refreshPhoto(ref) {
+    var p = REG[ref]; if (!p) return;
+    document.querySelectorAll('.img-slot[data-img="' + ref.replace(/"/g, "") + '"]').forEach(function (slot) {
+      slot.innerHTML = img(p, slot.dataset.alt, { changeable: slot.dataset.ch === "1" });
+    });
+  }
+  // Shrink a picked photo to at most 900 px so many fit in browser storage.
+  function readPhoto(file) {
+    return new Promise(function (resolve, reject) {
+      var u = URL.createObjectURL(file), im = new Image();
+      im.onload = function () {
+        var k = Math.min(1, 900 / Math.max(im.width, im.height)), c = document.createElement("canvas");
+        c.width = Math.round(im.width * k); c.height = Math.round(im.height * k);
+        var g = c.getContext("2d"); g.fillStyle = "#fff"; g.fillRect(0, 0, c.width, c.height); g.drawImage(im, 0, 0, c.width, c.height);
+        URL.revokeObjectURL(u); resolve(c.toDataURL("image/jpeg", 0.82));
+      };
+      im.onerror = function () { URL.revokeObjectURL(u); reject(new Error("讀不到這張照片")); };
+      im.src = u;
+    });
+  }
+  var picker;
+  function bindPhotoButtons(notify) {
+    notify = notify || function () {};
+    picker = document.createElement("input"); picker.type = "file"; picker.accept = "image/*"; picker.hidden = true;
+    document.body.appendChild(picker);
+    var target = null;
+    document.addEventListener("click", function (e) {
+      var b = e.target.closest("[data-photo]");
+      if (b) { e.preventDefault(); target = b.dataset.photo; picker.value = ""; picker.click(); return; }
+      var r = e.target.closest("[data-photo-reset]");
+      if (r) { e.preventDefault(); setMyPhoto(r.dataset.photoReset, null); refreshPhoto(r.dataset.photoReset); notify("已換回網站圖片", r.dataset.photoReset); }
+    });
+    picker.addEventListener("change", function () {
+      var f = picker.files[0]; if (!f || !target) return;
+      var ref = target;
+      readPhoto(f).then(function (d) {
+        if (setMyPhoto(ref, d)) { refreshPhoto(ref); notify("已換成你的照片，只存在這台裝置", ref); }
+        else notify("瀏覽器空間不夠，先還原幾張照片再試", ref);
+      }).catch(function (e) { notify(e.message, ref); });
+    });
+  }
+
   function displayName(p) { return p.brandZh ? p.brandZh + " " + p.name : p.name; }
 
   // ---- cards -----------------------------------------------------------
@@ -86,7 +161,7 @@
     var c = col.cover || {};
     var photos = (col.base || []).map(function (b) {
       var p = ctx.perfumes[b.ref];
-      return '<div class="ph" style="' + photoVars(p) + '">' + img(p, displayName(p)) +
+      return '<div class="ph" style="' + photoVars(p) + '">' + wrapImg(p, displayName(p)) +
         '<span class="cap">' + esc(b.cap || displayName(p)) + "</span></div>";
     }).join("");
     return '<section class="card cover" data-kind="cover" aria-label="封面"><div class="in">' +
@@ -116,7 +191,7 @@
     if (p.smell) s += '<div class="smell"><span class="tag">' + esc(p.source || "推論") + "</span>" + esc(p.smell) + "</div>";
     if (p.warning) s += '<div class="warn"><strong>注意</strong>　' + esc(p.warning) + "</div>";
     return '<section class="' + cls(p, "card") + '" style="' + vars(p) + '" data-kind="base" aria-label="' + esc(displayName(p)) + '"><div class="in">' +
-      '<div class="prod-head"><div class="prod-img" style="' + photoVars(p) + '">' + img(p, displayName(p) + " 瓶身") + "</div>" +
+      '<div class="prod-head"><div class="prod-img" style="' + photoVars(p) + '">' + wrapImg(p, displayName(p) + " 瓶身", { changeable: true }) + "</div>" +
       '<div class="prod-name"><div class="eyebrow">' + esc(b.label || "") + '</div><h2 class="h">' +
       (p.brandZh ? esc(p.brandZh) + "<br>" : "") + esc(p.name) + "</h2>" +
       '<div class="sub">' + esc(p.sub || [p.brand, p.en].filter(Boolean).join(" · ")) + "</div></div></div>" +
@@ -172,7 +247,7 @@
     return '<section class="' + cls(p, "card pc") + '" style="' + vars(p) + '" data-kind="candidate" data-ref="' + esc(c.ref) + '" aria-label="' + esc(p.name) + '"><div class="in">' +
       '<div class="pc-top"><div class="pc-head"><div class="eyebrow">' + esc(eyebrow) + "</div>" +
       '<h2 class="pc-name' + (p.name.length >= 7 ? " long" : "") + '">' + esc(p.name) + "<em>" + esc(p.en || "") + "</em></h2>" + badge + "</div>" +
-      '<div class="pc-img">' + img(p, p.name + " 瓶身") + "</div></div>" +
+      '<div class="pc-img" style="' + photoVars(p) + '">' + wrapImg(p, p.name + " 瓶身", { changeable: true }) + "</div></div>" +
       '<div class="pc-box"><div class="pc-label">單獨聞起來 <span class="tag">' + esc(p.source || "推論") + "</span></div>" + mats +
       '<p class="pc-text">' + esc(p.smell || "") + "</p></div>" +
       '<div class="pc-box"><div class="pc-label">' + (bases.length ? "疊起來" : "搭配") + ' <span class="tag">推論</span></div>' +
@@ -291,5 +366,6 @@
   }
 
   window.PC = { esc: esc, derive: derive, loadCollection: loadCollection, getJSON: getJSON, renderDeck: renderDeck,
-    numberPages: numberPages, candCard: candCard, baseCard: baseCard, img: img };
+    numberPages: numberPages, candCard: candCard, baseCard: baseCard, img: img, wrapImg: wrapImg,
+    refreshPhoto: refreshPhoto, bindPhotoButtons: bindPhotoButtons, readPhoto: readPhoto };
 })();

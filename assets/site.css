@@ -114,3 +114,5 @@ html.shot .card{width:1080px;border-radius:0;box-shadow:none}
 .rate5 button:focus-visible{outline:3px solid var(--citrus)}
 .sel-list{display:flex;flex-wrap:wrap;gap:8px}
 .sel-list span{background:#fff;border-radius:99px;padding:6px 12px;font-size:14px;border:1.5px solid rgba(22,40,29,.15)}
+
+.sel-list .mini{font:inherit;font-size:12px;font-weight:700;margin-left:4px;padding:3px 8px;min-height:26px;border-radius:99px;border:1.5px solid var(--tea);background:#fff;color:var(--tea);cursor:pointer}

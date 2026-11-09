@@ -52,8 +52,15 @@
     if (!touched.brandSlug) $("#brandSlug").value = slugify(val("brand"));
     if (!touched.slug) $("#slug").value = slugify(val("en")) || "";
     var b = val("brandSlug") || "brand", s = val("slug") || "perfume";
-    var d = { brand: val("brand"), brandZh: val("brandZh"), name: val("name"), en: val("en"), series: val("series"),
-      photo: "img/" + b + "/" + s + ".jpg", color: $("#color").value };
+    var d = { brand: val("brand"), brandZh: val("brandZh"), name: val("name"), en: val("en"), series: val("series"), color: $("#color").value };
+    var mode = $("#photoMode").value;
+    if (mode === "own") { d.photo = "img/" + b + "/" + s + ".jpg"; d.photoCredit = "自己拍的"; }
+    else if (mode === "url" && val("photoUrl")) { d.photo = val("photoUrl"); d.photoCredit = val("photoCredit") || hostOf(val("link") || val("photoUrl")); if (val("link")) d.link = val("link"); }
+    else if (mode === "fragrantica") {
+      var fid = (val("fragUrl").match(/-(\d+)\.html/) || [])[1];
+      if (fid) { d.photo = "https://fimgs.net/mdimg/perfume/375x500." + fid + ".jpg"; d.photoCredit = "Fragrantica"; d.link = val("fragUrl"); }
+    }
+    if (d.photo) { d.photoFit = $("#photoFit").value; if (d.photoFit === "contain") d.photoBg = "#ffffff"; }
     if ($("#theme").value === "dark") d.theme = "dark";
     var mats = list(val("materials")); if (mats.length) d.materials = mats; else d.materialsNote = val("materialsNote") || "完整香調尚未核實";
     var notes = { top: list(val("top")), heart: list(val("heart")), base: list(val("baseNotes")) };
@@ -64,14 +71,27 @@
   }
   function update() {
     var r = perfumeData(), json = JSON.stringify(r.data, null, 2);
-    $("#o-json").textContent = json; $("#o-path").textContent = r.path; $("#o-photo").textContent = r.data.photo;
+    $("#o-json").textContent = json; $("#o-path").textContent = r.path; $("#o-photo").textContent = r.data.photo || "（沒有照片）";
+    var mode = $("#photoMode").value;
+    document.querySelectorAll("[data-mode]").forEach(function (el) { el.hidden = el.dataset.mode !== mode; });
+    $("#gh-upload").hidden = mode !== "own";
     setLink($("#gh-new"), gh("new", "", "?filename=" + encodeURIComponent(r.path) + "&value=" + encodeURIComponent(json + "\n")));
     setLink($("#gh-upload"), gh("upload", "img/" + r.brand));
-    var p = JSON.parse(json); p.name = p.name || "香水名稱"; if (previewURL) p.photo = previewURL;
+    var p = JSON.parse(json); p.name = p.name || "香水名稱"; if (previewURL && mode === "own") p.photo = previewURL;
     var c = { ref: r.brand + "/" + r.slug, result: "（疊起來的結果，在組合檔裡填）", why: "這裡會寫為什麼這樣搭。" };
     $("#pv").innerHTML = PC.candCard(c, p, 0, { perfumes: {}, base: [] });
   }
   $("#f-perfume").addEventListener("input", update);
+  $("#f-perfume").addEventListener("change", update);
+  function hostOf(u) { try { return new URL(u).hostname.replace(/^www\./, ""); } catch (e) { return ""; } }
+  $("#dl-photo").addEventListener("click", function () {
+    var f = $("#photoFile").files[0]; if (!f) { toast("先選一張照片"); return; }
+    PC.readPhoto(f).then(function (dataURL) {
+      var a = document.createElement("a"); a.href = dataURL; a.download = (val("slug") || "perfume") + ".jpg";
+      document.body.appendChild(a); a.click(); a.remove();
+      toast("已下載 " + a.download + "，接著按「上傳照片」");
+    }).catch(function (e) { toast(e.message); });
+  });
   $("#copy-p").addEventListener("click", function () { copy($("#o-json").textContent); });
 
   // ---- collection ----

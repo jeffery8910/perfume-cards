@@ -19,7 +19,10 @@
     $("#desc").textContent = col.description || "";
     deck.innerHTML = PC.renderDeck(col, ctx);
     PC.numberPages(deck);
-    if (!SHOT) { initState(col, ctx); addExport(col); }
+    if (!SHOT) {
+      initState(col, ctx); addExport(col);
+      PC.bindPhotoButtons(function (msg) { var el = $("#toast"); el.textContent = msg; el.classList.add("show"); clearTimeout(el._t); el._t = setTimeout(function () { el.classList.remove("show"); }, 2400); });
+    }
     var imgs = $$("img", deck).map(function (im) {
       return im.complete ? Promise.resolve() : new Promise(function (r) { im.onload = im.onerror = r; });
     });

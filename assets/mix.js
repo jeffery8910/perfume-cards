@@ -101,7 +101,11 @@
     var list = sel.map(function (r) { return byRef[r]; });
     var box = $("#mixcard-box");
     var sl = $("#sel-list"); sl.textContent = "";
-    list.forEach(function (p, i) { var s = document.createElement("span"); s.textContent = (i + 1) + ". " + p.name; sl.appendChild(s); });
+    list.forEach(function (p, i) {
+      var s = document.createElement("span"); s.textContent = (i + 1) + ". " + p.name + " ";
+      var b = document.createElement("button"); b.type = "button"; b.className = "mini"; b.dataset.photo = p.ref; b.textContent = "用我的照片";
+      b.setAttribute("aria-label", p.name + " 換成我拍的照片"); s.appendChild(b); sl.appendChild(s);
+    });
     if (!list.length) { var s0 = document.createElement("span"); s0.textContent = "還沒選"; sl.appendChild(s0); }
 
     var title = list.length ? list.map(function (p) { return esc(p.name); }).join(" ＋ ") : "我的疊香";
@@ -198,6 +202,7 @@
   });
   $("#clear").addEventListener("click", function () { sel = []; paintTiles(); paintCard(); syncURL(); });
   $("#q").addEventListener("input", paintTiles);
+  PC.bindPhotoButtons(function (msg) { toast(msg); paintTiles(); paintCard(); });
   $("#brandSel").addEventListener("change", paintTiles);
 
   PC.getJSON("data/catalog.json").then(function (cat) {
